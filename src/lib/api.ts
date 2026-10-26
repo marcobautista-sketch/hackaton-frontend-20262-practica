@@ -69,8 +69,9 @@ export async function apiFetch<T>(path: string, options: RequestOptions = {}): P
         traceId: "",
       };
     }
-    // 401 = el token murio: avisar a la app.
-    if (res.status === 401 && onUnauthorized) onUnauthorized();
+    // 401 en una request AUTENTICADA = el token murio: avisar a la app.
+    // Sin token (login/registro) un 401 es "credenciales malas", no sesion muerta.
+    if (res.status === 401 && token && onUnauthorized) onUnauthorized();
     throw new ApiError(parsed);
   }
 
