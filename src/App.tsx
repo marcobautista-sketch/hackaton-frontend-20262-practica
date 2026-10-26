@@ -1,6 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthContext";
 import { RequireAuth } from "./auth/RequireAuth";
+import { AppLayout } from "./components/AppLayout";
+import DashboardPage from "./pages/DashboardPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
@@ -22,7 +25,9 @@ export default function App() {
           path="/dashboard"
           element={
             <RequireAuth>
-              <Placeholder name="Dashboard (issue 2)" />
+              <AppLayout>
+                <DashboardPage />
+              </AppLayout>
             </RequireAuth>
           }
         />
@@ -45,7 +50,8 @@ export default function App() {
           }
         />
 
-        <Route path="*" element={<Placeholder name="404 (issue 2)" />} />
+        {/* Issue 2 - Fabiana: 404 */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthProvider>
   );
