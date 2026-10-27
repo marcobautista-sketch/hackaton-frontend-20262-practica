@@ -104,7 +104,7 @@ export default function DashboardPage() {
             <StatCard label="Carteles" value={berries.format(wanted.total)} />
             <StatCard label="Recompensa total" value={formatBounty(wanted.totalBounty)} />
             <StatCard label="Recompensa promedio" value={formatBounty(wanted.averageBounty)} />
-            <StatCard label="Tripulaciones" value={berries.format(summary.crews)} />
+            <StatCard label="Tripulaciones" value={berries.format(summary.crews.total)} />
           </section>
 
           <section className="grid gap-4 md:grid-cols-2">

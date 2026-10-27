@@ -95,7 +95,11 @@ export interface DashboardSummary {
     byStatus: Record<WantedStatus, number>;
     byFruit: Record<FruitFilter, number>;
   };
-  crews: number;
+  crews: {
+    total: number;
+    /** Tripulacion con mayor recompensa total. `null` si no hay carteles. */
+    mostWanted: Crew | null;
+  };
   topBounties: WantedSummary[];
   generatedAt: string;
 }
