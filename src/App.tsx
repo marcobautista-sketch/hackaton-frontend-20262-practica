@@ -5,6 +5,8 @@ import { AppLayout } from "./components/AppLayout";
 import DashboardPage from "./pages/DashboardPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
+import NewsDetailPage from "./pages/NewsDetailPage";
+import NewsFeedPage from "./pages/NewsFeedPage";
 import RegisterPage from "./pages/RegisterPage";
 import WantedDetailPage from "./pages/WantedDetailPage";
 import WantedListPage from "./pages/WantedListPage";
@@ -55,6 +57,20 @@ export default function App() {
             </RequireAuth>
           }
         />
+
+        {/* CP4 - News Coo: el detalle es ruta hija para que el feed siga montado debajo */}
+        <Route
+          path="/news"
+          element={
+            <RequireAuth>
+              <AppLayout>
+                <NewsFeedPage />
+              </AppLayout>
+            </RequireAuth>
+          }
+        >
+          <Route path=":id" element={<NewsDetailPage />} />
+        </Route>
 
         {/* Issue 2 - Fabiana: 404 */}
         <Route path="*" element={<NotFoundPage />} />

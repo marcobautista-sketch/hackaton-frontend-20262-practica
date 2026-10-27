@@ -127,6 +127,48 @@ export const WANTED_SIZES = [10, 20, 50] as const;
 export const WANTED_STATUSES: WantedStatus[] = ["AT_LARGE", "CAPTURED", "MISSING"];
 export const FRUIT_FILTERS: FruitFilter[] = ["PARAMECIA", "ZOAN", "LOGIA", "NONE"];
 
+// --- Grand Line: noticias (CP4) ---
+
+export type NewsType =
+  | "BOUNTY_UPDATE" | "BATTLE" | "MARINE_OPERATION" | "WORLD_GOVERNMENT" | "DISCOVERY";
+export type NewsPriority = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+export type NewsStatus = "RUMOR" | "CONFIRMED" | "DEBUNKED";
+/** Estados a los que se puede verificar un rumor. */
+export type NewsVerdict = Exclude<NewsStatus, "RUMOR">;
+
+export interface NewsItem {
+  id: string;
+  type: NewsType;
+  priority: NewsPriority;
+  status: NewsStatus;
+  title: string;
+  summary: string;
+  source: string;
+  island: string;
+  relatedWanted: { id: string; name: string } | null;
+  publishedAt: string;
+  updatedAt: string;
+  /** `null` mientras sea RUMOR. */
+  verifiedAt: string | null;
+}
+
+export interface NewsDetail extends NewsItem {
+  body: string[];
+}
+
+export interface NewsFeed {
+  items: NewsItem[];
+  /** `null` cuando no hay mas. */
+  nextCursor: string | null;
+  hasMore: boolean;
+}
+
+export const NEWS_TYPES: NewsType[] = [
+  "BOUNTY_UPDATE", "BATTLE", "MARINE_OPERATION", "WORLD_GOVERNMENT", "DISCOVERY",
+];
+export const NEWS_PRIORITIES: NewsPriority[] = ["LOW", "MEDIUM", "HIGH", "CRITICAL"];
+export const NEWS_STATUSES: NewsStatus[] = ["RUMOR", "CONFIRMED", "DEBUNKED"];
+
 /** Formato unico de error de toda la API. */
 export interface ApiErrorBody {
   status: number;
