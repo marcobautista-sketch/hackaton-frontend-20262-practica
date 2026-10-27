@@ -6,6 +6,8 @@ import DashboardPage from "./pages/DashboardPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import WantedDetailPage from "./pages/WantedDetailPage";
+import WantedListPage from "./pages/WantedListPage";
 
 /**
  * Esqueleto de rutas. Cada issue reemplaza SUS placeholders.
@@ -37,7 +39,9 @@ export default function App() {
           path="/wanted"
           element={
             <RequireAuth>
-              <Placeholder name="Carteles (issue 3)" />
+              <AppLayout>
+                <WantedListPage />
+              </AppLayout>
             </RequireAuth>
           }
         />
@@ -45,7 +49,9 @@ export default function App() {
           path="/wanted/:id"
           element={
             <RequireAuth>
-              <Placeholder name="Detalle del cartel (issue 3)" />
+              <AppLayout>
+                <WantedDetailPage />
+              </AppLayout>
             </RequireAuth>
           }
         />
@@ -55,8 +61,4 @@ export default function App() {
       </Routes>
     </AuthProvider>
   );
-}
-
-function Placeholder({ name }: { name: string }) {
-  return <div className="p-8 text-slate-300">Pendiente: {name}</div>;
 }
