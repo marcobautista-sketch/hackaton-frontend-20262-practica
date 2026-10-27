@@ -1,0 +1,29 @@
+{
+  "teamCode": "TEAM-011",
+  "teamName": "Macarrón 3",
+  "repository": "https://github.com/marcobautista-sketch/hackaton-frontend-20262-practica",
+  "members": [
+    {
+      "name": "Marco Bautista",
+      "code": "202310546",
+      "github": "marcobautista-sketch"
+    },
+    {
+      "name": "Fabiana Gómez",
+      "code": "202310563",
+      "github": "fabsgomez"
+    },
+    {
+      "name": "Juan Carlos Alexander Vergara Montalván",
+      "code": "202120598",
+      "github": "JuancarlosVergara23"
+    }
+  ],
+  "checkpoints": {
+    "cp1": true,
+    "cp2": true,
+    "cp3": true,
+    "cp4": true,
+    "cp5": true
+  }
+}
