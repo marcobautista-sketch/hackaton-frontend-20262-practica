@@ -5,6 +5,7 @@ import { useAuth } from "../auth/useAuth";
 const NAV_LINKS = [
   { to: "/dashboard", label: "Dashboard" },
   { to: "/wanted", label: "Se Busca" },
+  { to: "/news", label: "Noticias" },
 ];
 
 /**
