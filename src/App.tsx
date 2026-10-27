@@ -8,6 +8,8 @@ import LoginPage from "./pages/LoginPage";
 import NewsDetailPage from "./pages/NewsDetailPage";
 import NewsFeedPage from "./pages/NewsFeedPage";
 import RegisterPage from "./pages/RegisterPage";
+import SagaStoryPage from "./pages/SagaStoryPage";
+import SagasPage from "./pages/SagasPage";
 import WantedDetailPage from "./pages/WantedDetailPage";
 import WantedListPage from "./pages/WantedListPage";
 
@@ -71,6 +73,28 @@ export default function App() {
         >
           <Route path=":id" element={<NewsDetailPage />} />
         </Route>
+
+        {/* CP5 - Poneglyph: resumen de sagas e historia con scrollytelling */}
+        <Route
+          path="/sagas"
+          element={
+            <RequireAuth>
+              <AppLayout>
+                <SagasPage />
+              </AppLayout>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/sagas/:id"
+          element={
+            <RequireAuth>
+              <AppLayout>
+                <SagaStoryPage />
+              </AppLayout>
+            </RequireAuth>
+          }
+        />
 
         {/* Issue 2 - Fabiana: 404 */}
         <Route path="*" element={<NotFoundPage />} />
