@@ -1,0 +1,104 @@
+/*
+ * Movimiento de la historia de una saga (CP5).
+ * Regla: todo lo que se mueve tiene (1) version con CSS Scroll-driven Animations,
+ * (2) alternativa equivalente si el navegador no las soporta y
+ * (3) se apaga por completo con prefers-reduced-motion.
+ */
+
+/* --- Colores de la etapa activa: llegan como variables desde React --- */
+.saga-root {
+  background-color: var(--saga-bg);
+  color: var(--saga-text);
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+/* --- Barra de progreso del scroll de toda la pagina --- */
+.saga-scroll-progress {
+  transform-origin: left center;
+  /* Alternativa: JS escribe --saga-scroll (0..1) cuando no hay scroll-driven animations. */
+  transform: scaleX(var(--saga-scroll, 0));
+}
+
+@supports (animation-timeline: scroll()) {
+  .saga-scroll-progress {
+    animation: saga-grow linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+
+@keyframes saga-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* --- Aparicion de cada etapa al entrar en pantalla --- */
+@supports (animation-timeline: view()) {
+  .saga-stage-card {
+    animation: saga-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+  }
+}
+
+/* Alternativa sin soporte: la etapa aparece cuando el scroll la alcanza (data-state). */
+@supports not (animation-timeline: view()) {
+  .saga-stage-card {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .saga-stage[data-state="upcoming"] .saga-stage-card {
+    opacity: 0.15;
+    transform: translateY(3rem);
+  }
+}
+
+@keyframes saga-reveal {
+  from { opacity: 0.15; transform: translateY(3rem); }
+  to { opacity: 1; transform: none; }
+}
+
+/* --- Mapa: barco, ruta e isla activa --- */
+.saga-ship {
+  transition: transform 0.9s ease-in-out;
+}
+
+.saga-route {
+  transition: stroke-dashoffset 0.9s ease-in-out;
+}
+
+.saga-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: saga-pulse 1.8s ease-out infinite;
+}
+
+@keyframes saga-pulse {
+  from { transform: scale(1); opacity: 0.7; }
+  to { transform: scale(2.4); opacity: 0; }
+}
+
+/* --- View Transition entre el resumen y la historia --- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+}
+
+/* --- Menos movimiento: nada se anima; todo el contenido queda visible y quieto --- */
+@media (prefers-reduced-motion: reduce) {
+  .saga-root,
+  .saga-root * {
+    animation: none !important;
+    transition: none !important;
+  }
+  .saga-stage-card {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .saga-pulse {
+    display: none;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

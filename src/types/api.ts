@@ -169,6 +169,72 @@ export const NEWS_TYPES: NewsType[] = [
 export const NEWS_PRIORITIES: NewsPriority[] = ["LOW", "MEDIUM", "HIGH", "CRITICAL"];
 export const NEWS_STATUSES: NewsStatus[] = ["RUMOR", "CONFIRMED", "DEBUNKED"];
 
+// --- Grand Line: sagas (CP5) ---
+
+/** Colores hexadecimales. `text` contrasta sobre `background`. */
+export interface Palette {
+  background: string;
+  surface: string;
+  primary: string;
+  accent: string;
+  text: string;
+}
+
+export interface SagaSummary {
+  id: string;
+  /** Orden cronologico, desde 1. */
+  order: number;
+  title: string;
+  subtitle: string;
+  synopsis: string;
+  stageCount: number;
+  /** Igual a `distanceNm` de la ultima etapa. */
+  totalDistanceNm: number;
+  firstIsland: string;
+  lastIsland: string;
+  palette: Palette;
+}
+
+export type StageMetricKey = "distanceNm" | "crewMorale" | "bountyPool" | "marineThreat";
+
+/** Todas las etapas traen las mismas 4 metricas, en el mismo orden. */
+export interface StageMetric {
+  key: StageMetricKey;
+  label: string;
+  value: number;
+  unit: string;
+}
+
+export interface SagaIsland {
+  id: string;
+  name: string;
+  /** Entre 0 y `map.width`. */
+  x: number;
+  /** Entre 0 y `map.height` (0 = arriba). */
+  y: number;
+}
+
+export interface SagaStage {
+  id: string;
+  /** Posicion desde 1; las etapas vienen ordenadas. */
+  order: number;
+  /** Unico dentro de la saga. */
+  slug: string;
+  title: string;
+  narrative: string[];
+  island: SagaIsland;
+  palette: Palette;
+  metrics: StageMetric[];
+}
+
+export interface SagaStory {
+  saga: SagaSummary & { intro: string };
+  /** Sistema de coordenadas del mapa: viewBox="0 0 width height". */
+  map: { width: number; height: number };
+  /** En orden de recorrido: la ruta une las islas en este orden. */
+  stages: SagaStage[];
+}
+
 /** Formato unico de error de toda la API. */
 export interface ApiErrorBody {
   status: number;
